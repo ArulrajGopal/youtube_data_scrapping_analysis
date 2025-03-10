@@ -72,27 +72,25 @@ def get_video_details(video_id_lst):
       try:
         video_stats = dict(
                         video_id = video['id'],
-                        Title = video['snippet']['title'],
-                        Published_date = video['snippet']['publishedAt'],
-                        Views = video['statistics']['viewCount'],
-                        Likes = video['statistics']['likeCount'],
-                        Comments = video['statistics']['commentCount'],
-                        Duration = video['contentDetails']['duration'])
+                        title = video['snippet']['title'],
+                        published_date = video['snippet']['publishedAt'],
+                        views = video['statistics']['viewCount'],
+                        likes = video['statistics']['likeCount'],
+                        comments = video['statistics']['commentCount'],
+                        duration = video['contentDetails']['duration'])
         all_video_stats.append(video_stats)
       except KeyError:
         video_stats = dict(
                         video_id = video['id'],
-                        Title = video['snippet']['title'],
-                        Published_date = video['snippet']['publishedAt'],
-                        Views = video['statistics']['viewCount'],
-                        Likes = video['statistics']['likeCount'],
-                        Comments = '0',
-                        Duration = video['contentDetails']['duration'])
+                        title = video['snippet']['title'],
+                        published_date = video['snippet']['publishedAt'],
+                        views = video['statistics']['viewCount'],
+                        likes = video['statistics']['likeCount'],
+                        comments = '0',
+                        duration = video['contentDetails']['duration'])
         all_video_stats.append(video_stats)
 
   return all_video_stats
-
-
 
 
 

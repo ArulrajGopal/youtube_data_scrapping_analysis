@@ -10,6 +10,7 @@ channel_details_lst = get_channel_details(channel_id_dict)
 for json in channel_details_lst:
     load_dyanmo_db("channel_details_tbl","channel_id",json)
 
+
 for channel in channel_details_lst:
     channel_id = channel["channel_id"]
     ply_lst_id = channel["upload_plylst_id"]
@@ -25,10 +26,11 @@ for channel in channel_details_lst:
         load_dyanmo_db("video_details_tbl","video_id",json)
 
 
+
 channel_df = fetch_dynamo_data_into_pd_dataframe("channel_details_tbl")
 channel_df.to_sql('youtube_channels', sqlalchemy_engine, if_exists='append', index=False)
 
 video_df = fetch_dynamo_data_into_pd_dataframe("video_details_tbl")
-video_df.to_sql('youtube_channels', sqlalchemy_engine, if_exists='append', index=False)
+video_df.to_sql('youtube_videos', sqlalchemy_engine, if_exists='append', index=False)
 
 print("Data inserted successfully!")
