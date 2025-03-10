@@ -29,19 +29,16 @@ def fetch_dynamo_data_into_pd_dataframe(table_name):
 
 def extract_channel_details(channel_id_dict):
     current_date = int(datetime.now().strftime("%Y%m%d%H"))
-    primary_key = 0
-
     channel_details_lst = []
 
     for channel in channel_id_dict.values():
-        request =youtube.channels().list(part="snippet,contentDetails,statistics", id=j)
+        request =youtube.channels().list(part="snippet,contentDetails,statistics", id=channel)
         response = request.execute()
         current_time = str(datetime.now())
         response["channel_id"] = channel
         response["load_dt"] = current_date
         response["updated_time"] = current_time
 
-        primary_key += 1
 
         channel_details_lst.append(response)
 
