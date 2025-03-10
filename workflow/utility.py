@@ -1,126 +1,48 @@
-from googleapiclient.discovery import build
 from config import *
+from integrate_utils import *
+from utility import *
+from config import *
+from datetime import datetime
+from config import *
+import pandas as pd
+
+def load_dyanmo_db(table_name,primary_key,value):
+    table = dynamodb.Table(table_name)
+    table.put_item(Item=value)
+    record_id = value[primary_key]
+    print(f"{record_id} record written into {table_name} successfully!!!")
 
 
-youtube =  build("youtube","v3",developerKey=youtube_api_key)
+def fetch_dynamo_data_into_pd_dataframe(table_name):
+    table = dynamodb.Table(table_name)
+
+    response = table.scan()
+    data = response.get('Items', [])
+
+    # Handle pagination
+    while 'LastEvaluatedKey' in response:
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        data.extend(response.get('Items', []))
+
+    df = pd.DataFrame(data)
+
+    return df
 
 
+def extract_channel_details(channel_id_dict):
+    current_date = int(datetime.now().strftime("%Y%m%d%H"))
+    primary_key = 0
 
-def get_channel_details(channel_id_dict):
-  all_data = []
-  channel_details_lst = []
-  upload_plylst_id_lst = []
+    channel_details_lst = []
 
-  for i,j in channel_id_dict.items():
-    request =youtube.channels().list(part="snippet,contentDetails,statistics", id=j)
-    response = request.execute()
-    all_data.append(response)
-    data = dict(
-              channel_id = j,
-              channel_name = response['items'][0]['snippet']['title'],
-              subscribers = response['items'][0]['statistics']['subscriberCount'],
-              views = response['items'][0]['statistics']['viewCount'],
-              videos = response['items'][0]['statistics']['videoCount'],
-              upload_plylst_id = response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-              )
-    channel_details_lst.append(data)
-
-  return channel_details_lst
-
-
-
-
-
-def get_videos_list(playlist_id):
-  video_id_list = []
-
-  request = youtube.playlistItems().list(part='contentDetails',playlistId = playlist_id)
-  response = request.execute()
-
-  for i in range(len(response['items'])):
-    video_id_list.append(response['items'][i]['contentDetails']['videoId'])
-
-  next_page_token = response.get('nextPageToken')
-  more_pages = True
-
-  while more_pages:
-    if next_page_token is None:
-      more_pages = False
-    else:
-        request = youtube.playlistItems().list(part='contentDetails',playlistId = playlist_id,maxResults = 50, pageToken = next_page_token)
+    for i,j in channel_id_dict.items():
+        request =youtube.channels().list(part="snippet,contentDetails,statistics", id=j)
         response = request.execute()
+        response["primary_key"] = primary_key
+        response["load_dt"] = current_date
 
-        for i in range(len(response['items'])):
-          video_id_list.append(response['items'][i]['contentDetails']['videoId'])
+        primary_key += 1
 
-        next_page_token = response.get('nextPageToken')
+        channel_details_lst.append(response)
 
-  return video_id_list
-
-
-
-
-def get_video_details(video_id_lst):
-  #dislikecount not available in the API
-  all_video_stats = []
-
-  for i in range(0, len(video_id_lst), 50):
-    request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_lst[i:i+50]))
-    response = request.execute()
-
-    for video in response['items']:
-      video_id = video['id']
-      title = video['snippet']['title']
-      published_date = video['snippet']['publishedAt']
-      try: 
-        views = video['statistics']['viewCount']
-      except KeyError:
-        views = 0
-      try:
-        likes = video['statistics']['likeCount']
-      except KeyError:
-        likes = 0
-      try:
-        comments = video['statistics']['commentCount']
-      except KeyError:
-        comments = 0
-      duration = video['contentDetails']['duration']
-
-      video_stats = dict(
-                      video_id = video_id,
-                      title = title,
-                      published_date = published_date,
-                      views = views,
-                      likes = likes,
-                      comments = comments,
-                      duration = duration
-                      )
-      
-      all_video_stats.append(video_stats)
-      
-
-  return all_video_stats
-
-
-
-
-def get_popular_comments(video_id):
-  popular_comments_lst = []
-
-  request = youtube.commentThreads().list(part="snippet,replies", maxResults=100,order="relevance",videoId=video_id)
-  response = request.execute()
-
-  for video in response['items']:
-      video_stats = dict(
-                      VideoId = video['snippet']['videoId'],
-                      Author = video['snippet']['topLevelComment']['snippet']['authorDisplayName'],
-                      Comment = video['snippet']['topLevelComment']['snippet']['textDisplay'],
-                      CommentId = video['snippet']['topLevelComment']['id'],
-                      CommentLike = video['snippet']['topLevelComment']['snippet']['likeCount'],
-                      Replies = video['snippet']['totalReplyCount'],
-                      PublishedAt = video['snippet']['topLevelComment']['snippet']['publishedAt'],
-                      UpdatedAt = video['snippet']['topLevelComment']['snippet']['updatedAt']
-                      )
-      popular_comments_lst.append(video_stats)
-
-  return popular_comments_lst
+    return channel_details_lst
