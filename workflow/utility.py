@@ -69,26 +69,35 @@ def get_video_details(video_id_lst):
     response = request.execute()
 
     for video in response['items']:
-      try:
-        video_stats = dict(
-                        video_id = video['id'],
-                        title = video['snippet']['title'],
-                        published_date = video['snippet']['publishedAt'],
-                        views = video['statistics']['viewCount'],
-                        likes = video['statistics']['likeCount'],
-                        comments = video['statistics']['commentCount'],
-                        duration = video['contentDetails']['duration'])
-        all_video_stats.append(video_stats)
+      video_id = video['id']
+      title = video['snippet']['title']
+      published_date = video['snippet']['publishedAt']
+      try: 
+        views = video['statistics']['viewCount']
       except KeyError:
-        video_stats = dict(
-                        video_id = video['id'],
-                        title = video['snippet']['title'],
-                        published_date = video['snippet']['publishedAt'],
-                        views = video['statistics']['viewCount'],
-                        likes = video['statistics']['likeCount'],
-                        comments = '0',
-                        duration = video['contentDetails']['duration'])
-        all_video_stats.append(video_stats)
+        views = 0
+      try:
+        likes = video['statistics']['likeCount']
+      except KeyError:
+        likes = 0
+      try:
+        comments = video['statistics']['commentCount']
+      except KeyError:
+        comments = 0
+      duration = video['contentDetails']['duration']
+
+      video_stats = dict(
+                      video_id = video_id,
+                      title = title,
+                      published_date = published_date,
+                      views = views,
+                      likes = likes,
+                      comments = comments,
+                      duration = duration
+                      )
+      
+      all_video_stats.append(video_stats)
+      
 
   return all_video_stats
 
