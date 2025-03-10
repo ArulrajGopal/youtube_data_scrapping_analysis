@@ -6,8 +6,3 @@ for response in channel_details_lst:
     load_dyanmo_db("channel_raw","primary_key",response)
 
 
-
-
-
-
-
