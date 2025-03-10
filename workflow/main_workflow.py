@@ -10,5 +10,5 @@ for response in channel_details_lst:
 print("channels details loaded into dynamoDB successfully!")
 
 
-df = fetch_dynamo_data_into_pd_dataframe("channel_raw")
-print(df)
+# df = fetch_dynamo_data_into_pd_dataframe("channel_raw")
+# print(df)
