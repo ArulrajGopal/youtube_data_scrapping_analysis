@@ -1,6 +1,7 @@
 import os
 import boto3
 import psycopg2
+from sqlalchemy import create_engine
 
 youtube_api_key = os.environ.get("youtube_api_key")
 aws_access_key_id=os.environ.get("aws_access_key_id")
@@ -37,10 +38,17 @@ dynamodb = boto3.resource(
     aws_secret_access_key=aws_secret_access_key
 )
 
+#postgres_connection
+host = 'localhost'
+port = '5432'
+database = 'my_database'
+
 postgresql = psycopg2.connect(
-            host="localhost",
-            dbname="my_database",
+            host=host,
+            dbname=database,
             user=postgress_user,
             password = postgres_password,
-            port="5432"
+            port=port
 )
+
+sqlalchemy_engine = create_engine(f'postgresql+psycopg2://{postgress_user}:{postgres_password}@{host}:{port}/{database}')
