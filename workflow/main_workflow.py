@@ -6,3 +6,10 @@ for response in channel_details_lst:
     load_dyanmo_db("channel_raw","primary_key",response)
 
 
+# video_id_list = []
+
+# request = youtube.playlistItems().list(part='contentDetails',playlistId = "UUhaRiZ3h9JlLCeO2pdWkxMw")
+# response = request.execute()
+
+# with open ("sample.txt","w") as f:
+#     f.write(str(response))

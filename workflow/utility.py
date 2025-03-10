@@ -1,9 +1,8 @@
 from config import *
 from utility import *
-from config import *
 from datetime import datetime
-from config import *
 import pandas as pd
+
 
 def load_dyanmo_db(table_name,primary_key,value):
     table = dynamodb.Table(table_name)
@@ -34,11 +33,13 @@ def extract_channel_details(channel_id_dict):
 
     channel_details_lst = []
 
-    for i,j in channel_id_dict.items():
+    for channel in channel_id_dict.values():
         request =youtube.channels().list(part="snippet,contentDetails,statistics", id=j)
         response = request.execute()
-        response["primary_key"] = primary_key
+        current_time = str(datetime.now())
+        response["channel_id"] = channel
         response["load_dt"] = current_date
+        response["updated_time"] = current_time
 
         primary_key += 1
 
