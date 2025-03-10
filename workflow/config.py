@@ -52,3 +52,5 @@ postgresql = psycopg2.connect(
 )
 
 sqlalchemy_engine = create_engine(f'postgresql+psycopg2://{postgress_user}:{postgres_password}@{host_name}:{port}/{database}')
+
+
