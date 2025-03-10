@@ -39,16 +39,16 @@ dynamodb = boto3.resource(
 )
 
 #postgres_connection
-host = 'localhost'
+host_name = '127.0.0.1'
 port = '5432'
 database = 'my_database'
 
 postgresql = psycopg2.connect(
-            host=host,
+            host=host_name,
             dbname=database,
             user=postgress_user,
             password = postgres_password,
             port=port
 )
 
-sqlalchemy_engine = create_engine(f'postgresql+psycopg2://{postgress_user}:{postgres_password}@{host}:{port}/{database}')
+sqlalchemy_engine = create_engine(f'postgresql+psycopg2://{postgress_user}:{postgres_password}@{host_name}:{port}/{database}')
