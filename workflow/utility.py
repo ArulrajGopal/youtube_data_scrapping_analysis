@@ -50,15 +50,13 @@ def extract_channel_details(channel_id_dict):
 
 
 def get_video_header(playlist_id):
-  video_id_list = []
-  response_list = []
+  video_header_dict = {}
 
   request = youtube.playlistItems().list(part='contentDetails',playlistId = playlist_id)
   response = request.execute()
 
   for i in range(len(response['items'])):
-    video_id_list.append(response['items'][i]['contentDetails']['videoId'])
-    response_list.append(response)
+    video_header_dict[response['items'][i]['contentDetails']['videoId']] = response
 
   next_page_token = response.get('nextPageToken')
   more_pages = True
@@ -71,12 +69,12 @@ def get_video_header(playlist_id):
         response = request.execute()
 
         for i in range(len(response['items'])):
-          video_id_list.append(response['items'][i]['contentDetails']['videoId'])
-          response_list.append(response)
+          video_header_dict[response['items'][i]['contentDetails']['videoId']] = response
 
         next_page_token = response.get('nextPageToken')
 
-  return video_id_list,response_list
+  return video_header_dict
+
 
 
 
@@ -94,29 +92,33 @@ def get_video_details(video_id_lst):
 
 
 
-def get_video_header(channel_plylst_dic):
+def get_video_all(channel_plylst_dic):
     current_date = int(datetime.now().strftime("%Y%m%d%H"))
-    response_list_output = []
-    video_id_list_output = []
+    video_header_lst = []
+    video_details_lst = []
    
     for playlist_id in channel_plylst_dic.values():
-        video_id_list,response_list = get_video_header(playlist_id)
+        video_header_dict = get_video_header(playlist_id)
 
-        for response in response_list:
+        for video_id, video_response in video_header_dict.items():
+           
             current_time = str(datetime.now())
-            response["video_id"] = response['items'][response]['contentDetails']['videoId']
-            response["load_dt"] = current_date
-            response["updated_time"] = current_time
-            response_list_output.append(response)
+            video_response["playlist_id"] = playlist_id
+            video_response["video_id"] = video_id
+            video_response["load_dt"] = current_date
+            video_response["updated_time"] = current_time
+            video_response["video_id"] = video_id
+            video_header_lst.append(video_response)
 
 
-        for video in range(0, len(video_id_list), 50):
-            request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_list[video:video+50]))
-            response = request.execute()
-            current_time = str(datetime.now())
-            response["video_id"] =video
-            response["load_dt"] = current_date
-            response["updated_time"] = current_time
-            video_id_list_output.append(response)
+        # for video in range(0, len(video_id_list), 50):
+        #     request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_list[video:video+50]))
+        #     response = request.execute()
+        #     current_time = str(datetime.now())
+        #     response["playlist_id"] = playlist_id
+        #     response["video_id"] =video
+        #     response["load_dt"] = current_date
+        #     response["updated_time"] = current_time
+        #     video_details_lst.append(response)
         
-    return video_id_list_output,response_list_output
+    return video_header_lst,video_details_lst
