@@ -18,7 +18,7 @@ logging_path = ""
 
 channel_id_dict= {
 "OPTIONWITHAK":"UCslsTpdkrVnZSwxawhJN6Ag"
-# ,"EQSIS":"UCKTWY-rVwUqCxrVmPOlJyjA"
+,"EQSIS":"UCKTWY-rVwUqCxrVmPOlJyjA"
 # ,"financeboosan":"UCmfl6VteCu880D8Txl4vEag"
 # ,"CapitalZone":"UCxoM_zP4Cr9LpIEn3TEZhvg"
 # ,"TheMadrasTrader":"UCqxH7wzv-sMrCnjP3lM3Nmw"
