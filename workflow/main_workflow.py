@@ -2,6 +2,7 @@ from utility import *
 
 channel_details_lst, channel_plylst_dic = extract_channel_details(channel_id_dict)
 print("channels details extracted successfully!")
+
 for response in channel_details_lst:
     load_dyanmo_db("channel_raw","channel_id",response)
 print("channels details loaded into dynamoDB successfully!")
@@ -15,4 +16,5 @@ for video_header in video_header_lst:
 
 for video_detail in video_details_lst:
     load_dyanmo_db("video_detail_raw","video_id",video_header)
+print("video details loaded into dynamoDB successfully!")
 
