@@ -9,12 +9,14 @@ print("channels details loaded into dynamoDB successfully!")
 
 
 video_header_lst, video_details_lst = get_video_all(channel_plylst_dic)
-print("videos details extracted successfully!")
+print("videos header and details extracted successfully!")
 
 for video_header in video_header_lst:
-    load_dyanmo_db("video_header_raw","video_id",video_header)
+    load_dyanmo_db("video_header_raw_tbl","video_id",video_header)
+
+print("video header loaded into dynamoDB successfully!")
 
 for video_detail in video_details_lst:
-    load_dyanmo_db("video_detail_raw","video_id",video_header)
+    load_dyanmo_db("video_details_raw_tbl","video_id",video_header)
 print("video details loaded into dynamoDB successfully!")
 
