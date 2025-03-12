@@ -13,3 +13,6 @@ print("videos details extracted successfully!")
 for video_header in video_header_lst:
     load_dyanmo_db("video_header_raw","video_id",video_header)
 
+for video_detail in video_details_lst:
+    load_dyanmo_db("video_detail_raw","video_id",video_header)
+
