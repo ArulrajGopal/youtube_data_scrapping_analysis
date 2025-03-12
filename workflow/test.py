@@ -7,21 +7,32 @@ import pandas as pd
 channel_playlist_dict = {'UCKTWY-rVwUqCxrVmPOlJyjA': 'UUKTWY-rVwUqCxrVmPOlJyjA',}
 
 
-video_response_lst = get_video_header("UUKTWY-rVwUqCxrVmPOlJyjA")
+def get_video_header_raw(channel_playlist_dict):
+    current_date = int(datetime.now().strftime("%Y%m%d%H"))
+    video_response_list = []
+    for playlst in channel_playlist_dict.values():
+        
+        video_response_lst = get_video_header(playlst)
 
-dic = {}
+        for i in range(len(video_response_lst)):
+            response = video_response_lst[i]["items"]
+        
+            for j in range(len(response)):
+                temp_dic = {}
+                temp_dic["video_id"] = response[j]["contentDetails"]["videoId"]
+                temp_dic["response"] = response[j]
+                current_time = str(datetime.now())
+                temp_dic["playlist_id"] = playlst
+                temp_dic["load_dt"] = current_date
+                temp_dic["updated_time"] = current_time
+                video_response_list.append(temp_dic)
+    
+    return video_response_list
 
-for i in range(len(video_response_lst)):
-    response = video_response_lst[i]["items"]
-    # print(response)
-   
-    for j in range(len(response)):
-        key = response[j]["contentDetails"]["videoId"]
-        value = response[j]
-        dic[key] = value
 
+video_response_list = get_video_header_raw(channel_playlist_dict)
+print(video_response_list[0])
 
-print(dic)
 
 
 

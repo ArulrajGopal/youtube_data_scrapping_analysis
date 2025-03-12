@@ -78,23 +78,28 @@ def get_video_header(playlist_id):
   return video_response_lst
 
 
-def get_video_all(channel_plylst_dic):
+def get_video_header_raw(channel_playlist_dict):
     current_date = int(datetime.now().strftime("%Y%m%d%H"))
-    video_header_lst = []
-   
-    for playlist_id in channel_plylst_dic.values():
-        video_header_dict = get_video_header(playlist_id)
-
-        for video_id, video_response in video_header_dict.items():
-           
-            current_time = str(datetime.now())
-            video_response["playlist_id"] = playlist_id
-            video_response["video_id"] = video_id
-            video_response["load_dt"] = current_date
-            video_response["updated_time"] = current_time
-            video_header_lst.append(video_response)
+    video_response_list = []
+    for playlst in channel_playlist_dict.values():
         
-    return video_header_lst
+        video_response_lst = get_video_header(playlst)
+
+        for i in range(len(video_response_lst)):
+            response = video_response_lst[i]["items"]
+        
+            for j in range(len(response)):
+                temp_dic = {}
+                temp_dic["video_id"] = response[j]["contentDetails"]["videoId"]
+                temp_dic["response"] = response[j]
+                current_time = str(datetime.now())
+                temp_dic["playlist_id"] = playlst
+                temp_dic["load_dt"] = current_date
+                temp_dic["updated_time"] = current_time
+                video_response_list.append(temp_dic)
+    
+    return video_response_list
+
 
 
 # def get_video_all(channel_plylst_dic):
