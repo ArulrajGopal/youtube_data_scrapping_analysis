@@ -28,6 +28,32 @@ def get_channel_details(channel_id_dict):
 
 
 
+def get_video_header(playlist_id):
+  video_header_dict = {}
+
+  request = youtube.playlistItems().list(part='contentDetails',playlistId = playlist_id)
+  response = request.execute()
+
+  for i in range(len(response['items'])):
+    video_header_dict[response['items'][i]['contentDetails']['videoId']] = response
+
+  next_page_token = response.get('nextPageToken')
+  more_pages = True
+
+  while more_pages:
+    if next_page_token is None:
+      more_pages = False
+    else:
+        request = youtube.playlistItems().list(part='contentDetails',playlistId = playlist_id,maxResults = 50, pageToken = next_page_token)
+        response = request.execute()
+
+        for i in range(len(response['items'])):
+          video_header_dict[response['items'][i]['contentDetails']['videoId']] = response
+
+        next_page_token = response.get('nextPageToken')
+
+  return video_header_dict
+
 
 def get_video_details(video_id_lst):
   #dislikecount not available in the API

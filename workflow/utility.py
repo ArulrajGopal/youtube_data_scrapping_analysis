@@ -76,22 +76,6 @@ def get_video_header(playlist_id):
   return video_header_dict
 
 
-
-
-def get_video_details(video_id_lst):
-  #dislikecount not available in the API
-  all_video_stats = []
-
-  for i in range(0, len(video_id_lst), 50):
-    request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_lst[i:i+50]))
-    response = request.execute()
-    all_video_stats.append(response)
-
-  return all_video_stats
-
-
-
-
 def get_video_all(channel_plylst_dic):
     current_date = int(datetime.now().strftime("%Y%m%d%H"))
     video_header_lst = []
@@ -107,18 +91,17 @@ def get_video_all(channel_plylst_dic):
             video_response["video_id"] = video_id
             video_response["load_dt"] = current_date
             video_response["updated_time"] = current_time
-            video_response["video_id"] = video_id
             video_header_lst.append(video_response)
 
-
-        # for video in range(0, len(video_id_list), 50):
-        #     request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_list[video:video+50]))
-        #     response = request.execute()
-        #     current_time = str(datetime.now())
-        #     response["playlist_id"] = playlist_id
-        #     response["video_id"] =video
-        #     response["load_dt"] = current_date
-        #     response["updated_time"] = current_time
-        #     video_details_lst.append(response)
+        video_id_list = list(video_header_dict.keys())
+        for video in range(0, len(video_id_list), 50):
+            request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_list[video:video+50]))
+            response = request.execute()
+            current_time = str(datetime.now())
+            response["playlist_id"] = playlist_id
+            response["video_id"] =video
+            response["load_dt"] = current_date
+            response["updated_time"] = current_time
+            video_details_lst.append(response)
         
     return video_header_lst,video_details_lst
