@@ -14,8 +14,6 @@ postgress_user = os.environ.get("postgress_user")
 postgres_password = os.environ.get("postgres_password")
 
 
-logging_path = ""
-
 channel_id_dict= {
 "OPTIONWITHAK":"UCslsTpdkrVnZSwxawhJN6Ag"
 ,"EQSIS":"UCKTWY-rVwUqCxrVmPOlJyjA"
