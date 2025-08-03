@@ -39,8 +39,9 @@ def get_video_header(playlist_id):
 def get_video_header_raw(channel_playlist_list):
     current_date = int(datetime.now().strftime("%Y%m%d%H"))
     video_response_list = []
+    total_playlists = len(channel_playlist_list)
+    progress = 0
     for playlst in channel_playlist_list:
-        print(f"Loading video details for playlist: {playlst}")
         video_response_lst = get_video_header(playlst)
 
         for item in video_response_lst:
@@ -51,7 +52,8 @@ def get_video_header_raw(channel_playlist_list):
                 temp_dic["load_dt"] = current_date
                 temp_dic["updated_time"] = str(datetime.now())
                 video_response_list.append(temp_dic)
-        print(f"Loaded successfully: {playlst}")
+        progress += 1
+        print(f"Progress: {progress}/{total_playlists} playlists processed.")
     return video_response_list
 
 
@@ -86,7 +88,7 @@ total_videos = len(video_header_list)
 progress = 0
 for response in video_header_list:
     progress += 1
-    print(f"Loading video details: {progress}/{total_videos}")
+    print(f"Progress: {progress}/{total_videos} videos processed.")
     load_dyanmo_db("video_raw",response)
 print("video details loaded into dynamoDB successfully!")
 
