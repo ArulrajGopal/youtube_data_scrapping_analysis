@@ -31,14 +31,14 @@ def convert_json_to_pandas_df(data):
         records.append({
             'channel_id': entry['channel_id'],
             'title': snippet.get('title', ''),
-            'description': snippet.get('description', ''),
             'updated_time': entry['updated_time'],
             'load_dt': int(entry['load_dt']),
             'uploads': uploads,
             'videocount': int(stats.get('videoCount', 0)),
             'viewcount': int(stats.get('viewCount', 0)),
             'subscriberCount': int(stats.get('subscriberCount', 0)),
-            'publishedAt': snippet.get('publishedAt', '')
+            'publishedAt': snippet.get('publishedAt', ''),
+            'description': snippet.get('description', '')
         })
 
     # Create DataFrame
