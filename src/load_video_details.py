@@ -55,6 +55,24 @@ def get_video_header_raw(channel_playlist_list):
     return video_response_list
 
 
+def convert_json_to_pandas_df(data):
+    rows = []
+    for item in data:
+        row = {
+            'video_id': item.get('video_id'),
+            'playlist_id': item.get('playlist_id'),
+            'videoPublishedAt': item['response']['contentDetails'].get('videoPublishedAt'),
+            'updated_time': item.get('updated_time'),
+            'load_dt': item.get('load_dt')
+        }
+        rows.append(row)
+
+    df = pd.DataFrame(rows)
+    df['load_dt'] = df['load_dt'].astype(int)
+
+    return df
+
+
 df = read_from_sql("channel_details")
 playlist_id_list = df['uploads'].tolist()
 playlist_id_list = ["UUYRB8kDbaW6a1Gufr_qwVTA","UUoxNE6QEFUAdKuqvjT-kNwA"]
@@ -75,12 +93,9 @@ print("video details loaded into dynamoDB successfully!")
 json_data = read_dyanmo_db("video_raw")
 print("data scanned from dynamoDB successfully!")
 
-print(json_data[0])
-
-# df = convert_json_to_pandas_df(json_data)
-# print("data converted to pandas df successfully!")
-
-# load_to_sql(df, "channel_details")
-# print("data loaded into postgresql table successfully!")
+df = convert_json_to_pandas_df(json_data)
+print("data converted to pandas df successfully!")
 
 
+load_to_sql(df, "video_details")
+print("data loaded into postgresql table successfully!")
