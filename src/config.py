@@ -1,7 +1,5 @@
 import os
 import boto3
-import psycopg2
-from sqlalchemy import create_engine
 from googleapiclient.discovery import build
 
 youtube_api_key = os.environ.get("youtube_api_key")
@@ -13,6 +11,13 @@ aws_secret_access_key= os.environ.get("aws_secret_access_key")
 postgress_user = os.environ.get("postgress_user")
 postgres_password = os.environ.get("postgres_password")
 
+
+# PostgreSQL connection details
+db_user = postgress_user
+db_password = postgres_password
+db_host = 'localhost'       
+db_port = '5432'
+db_name = 'postgres'
 
 channel_id_dict= {
 "OPTIONWITHAK":"UCslsTpdkrVnZSwxawhJN6Ag"
@@ -43,12 +48,7 @@ dynamodb = boto3.resource(
 
 
 
-# PostgreSQL connection details
-db_user = 'postgres'
-db_password = 'Arulraj_1234'
-db_host = 'localhost'       
-db_port = '5432'
-db_name = 'postgres'
+
 
 
 
