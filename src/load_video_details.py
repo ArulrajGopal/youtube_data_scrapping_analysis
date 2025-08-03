@@ -76,7 +76,7 @@ def convert_json_to_pandas_df(response):
 
 df = read_from_sql("channel_details")
 playlist_id_list = df['uploads'].tolist()
-playlist_id_list = ["UUYRB8kDbaW6a1Gufr_qwVTA","UUoxNE6QEFUAdKuqvjT-kNwA"]
+# playlist_id_list = ["UUYRB8kDbaW6a1Gufr_qwVTA","UUoxNE6QEFUAdKuqvjT-kNwA"]
 
 
 video_header_list = get_video_header_raw(playlist_id_list)
