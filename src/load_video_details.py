@@ -55,7 +55,8 @@ def get_video_header_raw(channel_playlist_list):
     return video_response_list
 
 
-def convert_json_to_pandas_df(data):
+def convert_json_to_pandas_df(response):
+    data = response["Items"]
     rows = []
     for item in data:
         row = {
