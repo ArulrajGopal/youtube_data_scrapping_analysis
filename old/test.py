@@ -2,7 +2,7 @@
 from config import *
 from utility import *
 from datetime import datetime
-import pandas as pd
+
 
 channel_playlist_dict = {'UCKTWY-rVwUqCxrVmPOlJyjA': 'UUKTWY-rVwUqCxrVmPOlJyjA',}
 
