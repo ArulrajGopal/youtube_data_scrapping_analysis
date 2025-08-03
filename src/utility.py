@@ -15,7 +15,6 @@ def read_dyanmo_db(table_name):
 def load_to_sql(df, table_name):
     engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
     df.to_sql(table_name, engine, if_exists='replace', index=False)
-    print(f"data loaded in {table_name} successfully.")
 
 
 def read_from_sql(table_name):
