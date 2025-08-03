@@ -5,47 +5,6 @@ from config import *
 youtube =  build("youtube","v3",developerKey=youtube_api_key)
 
 
-
-def get_channel_details(channel_id_dict):
-  all_data = []
-  channel_details_lst = []
-
-  for i,j in channel_id_dict.items():
-    request =youtube.channels().list(part="snippet,contentDetails,statistics", id=j)
-    response = request.execute()
-    all_data.append(response)
-    data = dict(
-              channel_id = j,
-              channel_name = response['items'][0]['snippet']['title'],
-              subscribers = response['items'][0]['statistics']['subscriberCount'],
-              views = response['items'][0]['statistics']['viewCount'],
-              videos = response['items'][0]['statistics']['videoCount'],
-              upload_plylst_id = response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-              )
-    channel_details_lst.append(data)
-
-  return channel_details_lst
-
-
-
-# channel_plylst_dic[channel] = response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-
-
-# def fetch_dynamo_data_into_pd_dataframe(table_name):
-#     table = dynamodb.Table(table_name)
-
-#     response = table.scan()
-#     data = response.get('Items', [])
-
-#     # Handle pagination
-#     while 'LastEvaluatedKey' in response:
-#         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-#         data.extend(response.get('Items', []))
-
-#     df = pd.DataFrame(data)
-
-#     return df
-
 # def get_video_header(playlist_id):
 #   video_response_lst = []
 
