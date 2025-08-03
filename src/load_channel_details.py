@@ -20,7 +20,8 @@ def extract_channel_details(channel_id_dict):
     return channel_details_lst
 
 
-def convert_json_to_pandas_df(data):
+def convert_json_to_pandas_df(response):
+    data = response["Items"]
     records = []
     for entry in data:
         item = entry['items'][0]

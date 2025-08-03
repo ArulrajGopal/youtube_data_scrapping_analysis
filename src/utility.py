@@ -10,8 +10,7 @@ def load_dyanmo_db(table_name,value):
 def read_dyanmo_db(table_name):
     table = dynamodb.Table(table_name)
     response = table.scan()
-    data = response['Items']
-    return data
+    return response
 
 def load_to_sql(df, table_name):
     engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
