@@ -44,7 +44,7 @@ dynamodb = boto3.resource(
 #postgres_connection
 host_name = '127.0.0.1'
 port = '5432'
-database = 'my_database'
+database = 'postgres'
 
 postgresql = psycopg2.connect(
             host=host_name,
