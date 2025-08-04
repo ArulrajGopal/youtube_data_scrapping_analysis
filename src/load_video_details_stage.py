@@ -4,9 +4,8 @@ from utility import *
 
 
 def convert_json_to_pandas_df(response):
-    data = response["Items"]
     rows = []
-    for item in data:
+    for item in response:
         row = {
             'video_id': item.get('video_id'),
             'playlist_id': item.get('playlist_id'),
@@ -21,13 +20,25 @@ def convert_json_to_pandas_df(response):
 
     return df
 
+def read_dynamo_db(table_name):
+    table = dynamodb.Table(table_name)
+    items = []
 
-json_data = read_dyanmo_db("video_raw")
+    response = table.scan()
+    items.extend(response.get('Items', []))
+
+    while 'LastEvaluatedKey' in response:
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        items.extend(response.get('Items', []))
+
+    return items
+
+json_data = read_dynamo_db("video_raw")
 print("data scanned from dynamoDB successfully!")
+
 
 df = convert_json_to_pandas_df(json_data)
 print("data converted to pandas df successfully!")
-
 
 load_to_sql(df, "video_details")
 print("data loaded into postgresql table successfully!")
