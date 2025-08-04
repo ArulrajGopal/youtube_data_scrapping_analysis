@@ -28,5 +28,5 @@ print("data scanned from dynamoDB successfully!")
 df = convert_json_to_pandas_df(json_data)
 print("data converted to pandas df successfully!")
 
-load_to_sql(df, "video_details")
+load_to_sql(df, "video_header_stage")
 print("data loaded into postgresql table successfully!")

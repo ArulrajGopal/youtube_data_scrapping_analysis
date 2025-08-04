@@ -35,6 +35,6 @@ print("data scanned from dynamoDB successfully!")
 df = convert_json_to_pandas_df(json_data)
 print("data converted to pandas df successfully!")
 
-load_to_sql(df, "channel_details")
+load_to_sql(df, "channel_details_stage")
 print("data loaded into postgresql table successfully!")
 
