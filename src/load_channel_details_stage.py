@@ -2,8 +2,7 @@ import pandas as pd
 from config import *
 from utility import *
 
-def convert_json_to_pandas_df(response):
-    data = response["Items"]
+def convert_json_to_pandas_df(data):
     records = []
     for entry in data:
         item = entry['items'][0]
