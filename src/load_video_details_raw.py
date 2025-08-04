@@ -73,6 +73,4 @@ for response in video_header_list:
 print("all video header data loaded into dynamoDB successfully!")
 
 
-json_data = read_dyanmo_db("video_raw")
-print("data scanned from dynamoDB successfully!")
 
