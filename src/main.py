@@ -5,7 +5,6 @@ scripts = [
     ,'src/load_channel_details_stage.py'
     ,'src/load_video_details_raw.py'
     ,'src/load_video_details_stage.py'
-
     ]
 
 for script in scripts:
