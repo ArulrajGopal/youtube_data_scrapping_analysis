@@ -29,7 +29,7 @@ def convert_json_to_pandas_df(response):
     return df
 
 
-json_data = read_dyanmo_db("channel_raw")
+json_data = read_dynamo_db("channel_raw")
 print("data scanned from dynamoDB successfully!")
 
 

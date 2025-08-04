@@ -20,18 +20,6 @@ def convert_json_to_pandas_df(response):
 
     return df
 
-def read_dynamo_db(table_name):
-    table = dynamodb.Table(table_name)
-    items = []
-
-    response = table.scan()
-    items.extend(response.get('Items', []))
-
-    while 'LastEvaluatedKey' in response:
-        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-        items.extend(response.get('Items', []))
-
-    return items
 
 json_data = read_dynamo_db("video_raw")
 print("data scanned from dynamoDB successfully!")
