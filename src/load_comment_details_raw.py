@@ -1,6 +1,7 @@
 from datetime import datetime
 from config import *
 from utility import *
+from googleapiclient.errors import HttpError
 
 
 def get_popular_comments(video_id_list):
