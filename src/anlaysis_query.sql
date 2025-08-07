@@ -10,7 +10,9 @@ A.view_count,
 A.commentcount 
 from video_details_stage A 
 join 
-(select channel_id, max(view_count) as view_count from video_details_stage
+(select 
+channel_id, max(view_count) as view_count
+from video_details_stage
 group by channel_id
 ) B 
 on A.channel_id = B.channel_id 
