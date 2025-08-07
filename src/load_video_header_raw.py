@@ -56,7 +56,7 @@ def get_video_header_raw(channel_playlist_list):
     return video_response_list
 
 
-df = read_from_sql("channel_details")
+df = read_from_sql("channel_details_stage")
 playlist_id_list = df['uploads'].tolist()
 # playlist_id_list = ["UUYRB8kDbaW6a1Gufr_qwVTA","UUoxNE6QEFUAdKuqvjT-kNwA"]
 
