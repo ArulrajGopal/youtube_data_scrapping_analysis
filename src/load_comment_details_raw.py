@@ -1,10 +1,6 @@
-from googleapiclient.discovery import build
+from datetime import datetime
 from config import *
-
-
-youtube =  build("youtube","v3",developerKey=youtube_api_key)
-
-
+from utility import *
 
 
 def get_popular_comments(video_id):
