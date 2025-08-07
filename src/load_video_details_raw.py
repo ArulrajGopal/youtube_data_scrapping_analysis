@@ -6,48 +6,32 @@ from utility import *
 df = read_from_sql("video_header_stage")
 video_id_list = df['video_id'].tolist()
 
-video_id_list = ["g3qMaKz_PK4","6vrNQ1mxmHc","69bCP0XhAkk","XC22G-5TM24","2JzaTCVNaB4","ptEn_JBQ-sQ","UZzCpYIM5yA","qpuvNboIHUA","87QF7dyoVVQ"]
-
-
-def get_video_details(video_id_lst):
-  #dislikecount not available in the API
+def extract_video_details(video_id_list):
+  current_date = int(datetime.now().strftime("%Y%m%d%H"))
   all_video_stats = []
 
-  for i in range(0, len(video_id_lst), 50):
-    request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_lst[i:i+50]))
+  for i in range(0, len(video_id_list), 50):
+    request = youtube.videos().list(part="snippet,contentDetails,statistics",id=','.join(video_id_list[i:i+50]))
     response = request.execute()
 
-    for video in response['items']:
-      video_id = video['id']
-      title = video['snippet']['title']
-      published_date = video['snippet']['publishedAt']
-      try: 
-        views = video['statistics']['viewCount']
-      except KeyError:
-        views = 0
-      try:
-        likes = video['statistics']['likeCount']
-      except KeyError:
-        likes = 0
-      try:
-        comments = video['statistics']['commentCount']
-      except KeyError:
-        comments = 0
-      duration = video['contentDetails']['duration']
+    
+    for item in response['items']:
+      current_time = str(datetime.now())
+      item['video_id'] = item.pop('id')
+      item["load_dt"] = current_date
+      item["updated_time"] = current_time
 
-      video_stats = dict(
-                      video_id = video_id,
-                      title = title,
-                      published_date = published_date,
-                      views = views,
-                      likes = likes,
-                      comments = comments,
-                      duration = duration
-                      )
-      
-      all_video_stats.append(video_stats)
-      
-
+      all_video_stats.append(item)
+  
   return all_video_stats
+   
+
+video_details_lst = extract_video_details(video_id_list)
+print("video details extracted successfully!")
+
+
+for response in video_details_lst:
+    load_dyanmo_db("video_details_raw",response)
+print("video details loaded into dynamoDB successfully!")
 
 

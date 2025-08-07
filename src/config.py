@@ -38,6 +38,7 @@ channel_id_dict= {
 ,"TradeAchievers":"UCzk4zJEoZMnjvpoN0HlKjHQ"
 }
 
+# Akshat Shrivastava, CA Rachana Phadke Ranade, finance with sharan, be rich, pr sundar
 
 dynamodb = boto3.resource(
     'dynamodb',
