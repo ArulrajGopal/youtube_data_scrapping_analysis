@@ -1,13 +1,14 @@
 import subprocess
 
 scripts = [
-    # 'src/load_channel_details_raw.py',
-    # 'src/load_channel_details_stage.py',
-    # 'src/load_video_header_raw.py',
-    'src/load_video_header_stage.py',
-    'src/load_video_details_raw.py',
-    'src/load_video_details_stage.py',
-    'src/load_comment_details_raw.py'
+    'src/channel_details_raw.py',
+    'src/channel_details_stage.py',
+    'src/video_header_raw.py',
+    'src/video_header_stage.py',
+    'src/video_details_raw.py',
+    'src/video_details_stage.py',
+    'src/comment_details_raw.py',
+    # 'src/comment_details_stage.py'
     ]
 
 

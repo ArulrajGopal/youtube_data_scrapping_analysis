@@ -19,24 +19,30 @@ db_host = 'localhost'
 db_port = '5432'
 db_name = 'postgres'
 
-channel_id_dict= {
-"OPTIONWITHAK":"UCslsTpdkrVnZSwxawhJN6Ag"
-,"EQSIS":"UCKTWY-rVwUqCxrVmPOlJyjA"
-,"financeboosan":"UCmfl6VteCu880D8Txl4vEag"
-,"CapitalZone":"UCxoM_zP4Cr9LpIEn3TEZhvg"
-,"TheMadrasTrader":"UCqxH7wzv-sMrCnjP3lM3Nmw"
-,"SagaContraTrading":"UChaRiZ3h9JlLCeO2pdWkxMw"
-,"ddnifty":"UCYRB8kDbaW6a1Gufr_qwVTA"
-,"TamilStockMarket":"UC8HLa3_4B_31-UMSiLXrsCQ"
-,"HumbledVillageTrader":"UCoxNE6QEFUAdKuqvjT-kNwA"
-,"TamilShare":"UCaGwH4JooqsvBt-gJtB85Lg"
-,"TiruppurBullsShares":"UCqhL6vNCwYLC9_jePXOIvBg"
-,"PRSundar":"UCS2NdYUmv_PUyyKeDAo5zYA"
-,"Muthaleetukalam":"UCahsYnjbRheSL7uv6jWbJ4w"
-,"CauveryBusiness" : "UCa1FSXPOxb0x8lZTYCbQJ5g"
-,"MoneyPechu" : "UC7fQFl37yAOaPaoxQm-TqSA"
-,"TradeAchievers":"UCzk4zJEoZMnjvpoN0HlKjHQ"
-}
+# in channel_id_config, the third element indicates whether to process the channel or not
+# True means process, False means skip
+# second element is channel_id, first element is channel_name
+channel_id_config= [
+    ["Akshat Shrivastava", "UCqW8jxh4tH1Z1sWPbkGWL4g", True],
+    ["CA Rachana Phadke Ranade", "UCe3qdG0A_gr-sEdat5y2twQ", True],
+    ["Be Rich", "UCZ-RwglseBp2cAuHwYGb91Q", True],
+    ["Finance With Sharan", "UCwVEhEzsjLym_u1he4XWFkg", True],
+    ["PRSundar", "UCS2NdYUmv_PUyyKeDAo5zYA", True],
+    ["EQSIS", "UCKTWY-rVwUqCxrVmPOlJyjA", False],
+    ["financeboosan", "UCmfl6VteCu880D8Txl4vEag", False],
+    ["CapitalZone", "UCxoM_zP4Cr9LpIEn3TEZhvg", False],
+    ["TheMadrasTrader", "UCqxH7wzv-sMrCnjP3lM3Nmw", False],
+    ["SagaContraTrading", "UChaRiZ3h9JlLCeO2pdWkxMw", False],
+    ["ddnifty", "UCYRB8kDbaW6a1Gufr_qwVTA", False],
+    ["TamilStockMarket", "UC8HLa3_4B_31-UMSiLXrsCQ", False],
+    ["HumbledVillageTrader", "UCoxNE6QEFUAdKuqvjT-kNwA", False],
+    ["TamilShare", "UCaGwH4JooqsvBt-gJtB85Lg", False],
+    ["TiruppurBullsShares", "UCqhL6vNCwYLC9_jePXOIvBg", False],
+    ["Muthaleetukalam", "UCahsYnjbRheSL7uv6jWbJ4w", False],
+    ["CauveryBusiness", "UCa1FSXPOxb0x8lZTYCbQJ5g", False],
+    ["MoneyPechu", "UC7fQFl37yAOaPaoxQm-TqSA", False],
+    ["TradeAchievers", "UCzk4zJEoZMnjvpoN0HlKjHQ", False]
+]
 
 # Akshat Shrivastava, CA Rachana Phadke Ranade, finance with sharan, be rich, pr sundar
 
