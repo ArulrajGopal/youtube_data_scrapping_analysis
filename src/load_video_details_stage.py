@@ -18,6 +18,12 @@ def convert_json_to_pandas_df(video_list):
             thumbnails.get("default", {}).get("url")
         )
 
+        def to_int(value):
+            try:
+                return int(value)
+            except (TypeError, ValueError):
+                return None
+
         statistics = video.get("statistics", {})
         content = video.get("contentDetails", {})
 
@@ -25,14 +31,14 @@ def convert_json_to_pandas_df(video_list):
             "videoid": video.get("video_id"),
             "title": snippet.get("title"),
             "duration": content.get("duration"),
-            "likecount": statistics.get("likeCount"),
-            "view_count": statistics.get("viewCount"),
-            "favoritecount": statistics.get("favoriteCount"),
-            "commentcount": statistics.get("commentCount"),
+            "likecount": to_int(statistics.get("likeCount")),
+            "view_count": to_int(statistics.get("viewCount")),
+            "favoritecount": to_int(statistics.get("favoriteCount")),
+            "commentcount": to_int(statistics.get("commentCount")),
             "channel_id": snippet.get("channelId"),
             "updated_time": video.get("updated_time"),
             "publishedAt": snippet.get("publishedAt"),
-            "load_dt": video.get("load_dt"),
+            "load_dt": to_int(video.get("load_dt")),
             "description": snippet.get("description"),
             "thumbnails_url": thumbnail_url,
             "categoryid": snippet.get("categoryId"),
