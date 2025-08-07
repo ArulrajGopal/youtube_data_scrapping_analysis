@@ -2,10 +2,6 @@ from datetime import datetime
 from config import *
 from utility import *
 
-
-df = read_from_sql("video_header_stage")
-video_id_list = df['video_id'].tolist()
-
 def extract_video_details(video_id_list):
   current_date = int(datetime.now().strftime("%Y%m%d%H"))
   all_video_stats = []
@@ -25,6 +21,8 @@ def extract_video_details(video_id_list):
   
   return all_video_stats
    
+df = read_from_sql("video_header_stage")
+video_id_list = df['video_id'].tolist()
 
 video_details_lst = extract_video_details(video_id_list)
 print("video details extracted successfully!")
