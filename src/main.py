@@ -13,6 +13,7 @@ scripts = [
 
 
 for script in scripts:
+    print(f'Running {script}...')
     result = subprocess.run(['python', script], capture_output=True, text=True)
     print(f'--- Output of {script} ---')
     print(result.stdout)
