@@ -21,3 +21,18 @@ and A.view_count = B.view_count
 join channel_details_stage C 
 on A.channel_id = C.channel_id
 
+
+-- datatype check query
+SELECT 
+    column_name, 
+    data_type,
+    character_maximum_length,
+    numeric_precision,
+    numeric_scale,
+    is_nullable,
+    column_default
+FROM 
+    information_schema.columns
+WHERE 
+    table_schema = 'public'  -- change if your table is in a different schema
+    AND table_name = 'comment_details_stage';  -- replace with your actual table name
