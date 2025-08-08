@@ -6,7 +6,7 @@ from botocore.exceptions import ClientError
 
 
 def read_dynamo_db(table_name):
-    table = dynamodb.Table(table_name)
+    table = dynamodb_resource.Table(table_name)
     items = []
 
     response = table.scan()
