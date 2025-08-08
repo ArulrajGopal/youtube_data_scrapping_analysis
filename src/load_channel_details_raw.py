@@ -25,6 +25,6 @@ channel_details_lst = extract_channel_details(channel_id_config)
 print("channels details extracted successfully!")
 
 for response in channel_details_lst:
-    load_dyanmo_db("channel_raw",response)
+    load_dyanmo_db("channel_raw","channel_id",response)
 print("channels details loaded into dynamoDB successfully!")
 

@@ -29,7 +29,7 @@ print("video details extracted successfully!")
 
 
 for response in video_details_lst:
-    load_dyanmo_db("video_details_raw",response)
+    load_dyanmo_db("video_details_raw","video_id",response)
 print("video details loaded into dynamoDB successfully!")
 
 

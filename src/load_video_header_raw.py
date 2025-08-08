@@ -69,7 +69,7 @@ progress = 0
 for response in video_header_list:
     progress += 1
     print(f"Progress: {progress}/{total_videos} videos header data loaded into dynamodb successfully!.")
-    load_dyanmo_db("video_raw",response)
+    load_dyanmo_db("video_raw","video_id",response)
 print("all video header data loaded into dynamoDB successfully!")
 
 

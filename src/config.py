@@ -1,12 +1,27 @@
 import os
 import boto3
 from googleapiclient.discovery import build
+from config import *
 
 youtube_api_key = os.environ.get("youtube_api_key")
 youtube =  build("youtube","v3",developerKey=youtube_api_key)
 
 aws_access_key_id=os.environ.get("aws_access_key_id")
 aws_secret_access_key= os.environ.get("aws_secret_access_key")
+
+dynamodb_resource = boto3.resource(
+    'dynamodb',
+    region_name='us-east-1', 
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key
+)
+
+dynamodb_client = boto3.client(
+    'dynamodb',
+    region_name='us-east-1',
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key
+)
 
 postgress_user = os.environ.get("postgress_user")
 postgres_password = os.environ.get("postgres_password")
@@ -19,7 +34,7 @@ db_host = 'localhost'
 db_port = '5432'
 db_name = 'postgres'
 
-# in channel_id_config, the third element indicates whether to process the channel or not
+# In channel_id_config, the third element indicates whether to process the channel or not
 # True means process, False means skip
 # second element is channel_id, first element is channel_name
 channel_id_config= [
@@ -44,14 +59,11 @@ channel_id_config= [
     ["TradeAchievers", "UCzk4zJEoZMnjvpoN0HlKjHQ", False]
 ]
 
-# Akshat Shrivastava, CA Rachana Phadke Ranade, finance with sharan, be rich, pr sundar
 
-dynamodb = boto3.resource(
-    'dynamodb',
-    region_name='us-east-1', 
-    aws_access_key_id=aws_access_key_id,
-    aws_secret_access_key=aws_secret_access_key
-)
+
+
+
+
 
 
 
