@@ -3,23 +3,36 @@ from config import *
 from utility import *
 
 
-def get_popular_comments_1(video_id):
-  popular_comments_lst = []
+def convert_json_to_pandas_df(json_data):
+  rows = []
+  for item in json_data:
+      snippet = item.get("snippet", {}).get("topLevelComment", {}).get("snippet", {})
+      rows.append({
+          "comment_id": item.get("comment_id"),
+          "textOriginal": snippet.get("textOriginal"),
+          "likeCount": int(snippet.get("likeCount", 0)),
+          "authorDisplayName": snippet.get("authorDisplayName"),
+          "authorChannelUrl": snippet.get("authorChannelUrl"),
+          "videoId": snippet.get("videoId"),
+          "channelId": snippet.get("channelId"),
+          "load_dt": int(item.get("load_dt", 0)),
+          "publishedAt": snippet.get("publishedAt"),
+          "updatedAt": snippet.get("updatedAt"),
+          "updated_time": item.get("updated_time")         
+      })
 
-  request = youtube.commentThreads().list(part="snippet,replies", maxResults=100,order="relevance",videoId=video_id)
-  response = request.execute()
+  df = pd.DataFrame(rows)
+  return df
 
-  for video in response['items']:
-      video_stats = dict(
-                      VideoId = video['snippet']['videoId'],
-                      Author = video['snippet']['topLevelComment']['snippet']['authorDisplayName'],
-                      Comment = video['snippet']['topLevelComment']['snippet']['textDisplay'],
-                      CommentId = video['snippet']['topLevelComment']['id'],
-                      CommentLike = video['snippet']['topLevelComment']['snippet']['likeCount'],
-                      Replies = video['snippet']['totalReplyCount'],
-                      PublishedAt = video['snippet']['topLevelComment']['snippet']['publishedAt'],
-                      UpdatedAt = video['snippet']['topLevelComment']['snippet']['updatedAt']
-                      )
-      popular_comments_lst.append(video_stats)
+json_data = read_dynamo_db("comment_details_raw")
+print("data scanned from dynamoDB successfully!")
 
-  return popular_comments_lst
+print(json_data[0])
+
+
+df = convert_json_to_pandas_df(json_data)
+print("data converted to pandas df successfully!")
+
+load_to_sql(df, "comment_details_stage")
+print("data loaded into postgresql table successfully!")
+
