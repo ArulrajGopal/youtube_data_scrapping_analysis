@@ -2,7 +2,7 @@ from datetime import datetime
 from config import *
 from utility import *
 from googleapiclient.errors import HttpError
-
+import uuid
 
 def get_popular_comments(video_id_list):
   current_date = int(datetime.now().strftime("%Y%m%d%H"))
@@ -17,7 +17,7 @@ def get_popular_comments(video_id_list):
 
       for comment in comments_list:
         current_time = str(datetime.now())
-        comment['comment_id'] = comment.pop('id')
+        comment['comment_id'] = str(uuid.uuid4())
         comment["load_dt"] = current_date
         comment["updated_time"] = current_time
         all_popular_comments.append(comment)
