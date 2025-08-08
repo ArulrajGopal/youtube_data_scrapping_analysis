@@ -38,7 +38,7 @@ print("popular comments extracted successfully!")
 
 
 for response in popular_comments_lst:
-    load_dyanmo_db("comment_details_raw","comment_id",response)
+    load_dyanmo_db("comment_details_raw","comment_id",response, is_replace=True)
 print("comment details loaded into dynamoDB successfully!")
 
 
