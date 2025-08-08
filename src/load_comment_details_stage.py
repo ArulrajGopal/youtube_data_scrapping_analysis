@@ -27,8 +27,6 @@ def convert_json_to_pandas_df(json_data):
 json_data = read_dynamo_db("comment_details_raw")
 print("data scanned from dynamoDB successfully!")
 
-print(json_data[0])
-
 
 df = convert_json_to_pandas_df(json_data)
 print("data converted to pandas df successfully!")
