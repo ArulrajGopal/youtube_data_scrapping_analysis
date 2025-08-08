@@ -10,7 +10,7 @@ def get_popular_comments(video_id_list):
 
   for video_id in video_id_list:
     try:
-      request = youtube.commentThreads().list(part="snippet,replies", maxResults=100,order="relevance",videoId=video_id)
+      request = youtube.commentThreads().list(part="snippet", maxResults=100,order="relevance",videoId=video_id)
       response = request.execute()
 
       comments_list = response["items"]
@@ -36,9 +36,8 @@ video_id_list = ["IMCoGAtj_dY","NWGH_8gcS2Y","Xn7KWR9EOGQ","hQDxAW8WFbc","sU9SFT
 popular_comments_lst = get_popular_comments(video_id_list)
 print("popular comments extracted successfully!")
 
-
 for response in popular_comments_lst:
-    load_dyanmo_db("comment_details_raw","comment_id",response, is_replace=True)
+    load_dyanmo_db("comment_details_raw",response,"comment_id", is_replace=True)
 print("comment details loaded into dynamoDB successfully!")
 
 
