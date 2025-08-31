@@ -42,7 +42,7 @@ channel_id_config= [
     ["CA Rachana Phadke Ranade", "UCe3qdG0A_gr-sEdat5y2twQ", True],
     ["MoneyPechu", "UC7fQFl37yAOaPaoxQm-TqSA", True],
     ["Finance With Sharan", "UCwVEhEzsjLym_u1he4XWFkg", True],
-    ["PRSundar", "UCS2NdYUmv_PUyyKeDAo5zYA", True],
+    ["PRSundar", "UCS2NdYUmv_PUyyKeDAo5zYA", False],
     ["Be Rich", "UCZ-RwglseBp2cAuHwYGb91Q", False],
     ["EQSIS", "UCKTWY-rVwUqCxrVmPOlJyjA", False],
     ["financeboosan", "UCmfl6VteCu880D8Txl4vEag", False],
