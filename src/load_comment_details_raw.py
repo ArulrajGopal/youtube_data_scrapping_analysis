@@ -31,13 +31,15 @@ df = read_from_sql("video_header_stage")
 video_id_list = df['video_id'].tolist()
 
 
-video_id_list = ["IMCoGAtj_dY","NWGH_8gcS2Y","Xn7KWR9EOGQ","hQDxAW8WFbc","sU9SFT1nAOw"]
+
+video_id_list = ["P_gV1uvwYbI","CuRzpot5c5g","6MtiylZC_eM","pIX_zytsvLI","ECpin233eTU"]
+video_id_list = ["P_gV1uvwYbI"]
 
 popular_comments_lst = get_popular_comments(video_id_list)
 print("popular comments extracted successfully!")
 
+
 for response in popular_comments_lst:
     load_dyanmo_db("comment_details_raw",response,"comment_id", is_replace=True)
 print("comment details loaded into dynamoDB successfully!")
-
 
