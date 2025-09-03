@@ -9,6 +9,7 @@ def convert_json_to_pandas_df(json_data):
       snippet = item.get("snippet", {}).get("topLevelComment", {}).get("snippet", {})
       rows.append({
           "comment_id": item.get("comment_id"),
+          "id": item.get("id"),
           "textOriginal": snippet.get("textOriginal"),
           "likeCount": int(snippet.get("likeCount", 0)),
           "authorDisplayName": snippet.get("authorDisplayName"),
