@@ -29,7 +29,7 @@ def get_popular_comments(video_id_list):
 
 df = read_from_sql("video_header_stage")
 video_id_list = df['video_id'].tolist()
-video_id_list = ["6MtiylZC_eM","Azi4VQhlQFw"]
+
 
 popular_comments_lst = get_popular_comments(video_id_list)
 print("popular comments extracted successfully!")
