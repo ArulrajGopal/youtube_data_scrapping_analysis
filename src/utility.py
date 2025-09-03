@@ -1,8 +1,10 @@
 from config import *
 import pandas as pd
 from sqlalchemy import create_engine
-from botocore.exceptions import ClientError
+from config import *
+from utility import *
 
+import botocore.exceptions
 
 
 def read_dynamo_db(table_name):
@@ -30,38 +32,16 @@ def read_from_sql(table_name):
 
 
 
+def table_exists(table_name):
+    try:
+        response = dynamodb_client.describe_table(TableName=table_name)
+        return response["Table"]["TableStatus"]
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == 'ResourceNotFoundException':
+            return None
+        else:
+            raise
 
-
-
-def create_table_if_not_exists(table_name,primary_key):
-
-    def table_exists(table_name):
-        try:
-            dynamodb_client.describe_table(TableName=table_name)
-            print(f"Table '{table_name}' already exists.")
-            return True
-        except ClientError as e:
-            if e.response['Error']['Code'] == 'ResourceNotFoundException':
-                return False
-            else:
-                raise
-
-    if not table_exists(table_name):
-        response = dynamodb_client.create_table(
-            TableName=table_name,
-            KeySchema=[
-                {'AttributeName': primary_key, 'KeyType': 'HASH'}
-            ],
-            AttributeDefinitions=[
-                {'AttributeName': primary_key, 'AttributeType': 'S'}
-            ],
-            BillingMode='PAY_PER_REQUEST'  # or use ProvisionedThroughput
-        )
-        print(f"Creating table '{table_name}'...")
-
-        waiter = dynamodb_client.get_waiter('table_exists')
-        waiter.wait(TableName=table_name)
-        print(f"Table '{table_name}' is ready.")
 
 def create_table(table_name,primary_key):
     response = dynamodb_client.create_table(
@@ -78,38 +58,35 @@ def create_table(table_name,primary_key):
 
     waiter = dynamodb_client.get_waiter('table_exists')
     waiter.wait(TableName=table_name)
-    print(f"Table '{table_name}' is ready.")
+    return "table_created"
 
 
 
-def delete_table(name):
-    try:
-        print(f"Deleting table '{name}'...")
-        dynamodb_client.delete_table(TableName=name)
+def delete_table(table_name):
+    print(f"Deleting table '{table_name}'...")
+    dynamodb_client.delete_table(TableName=table_name)
 
-        # Wait until the table no longer exists
-        waiter = dynamodb_client.get_waiter('table_not_exists')
-        waiter.wait(TableName=name)
-
-        print(f"Table '{name}' deleted successfully.")
-    except ClientError as e:
-        if e.response['Error']['Code'] == 'ResourceNotFoundException':
-            print(f"Table '{name}' does not exist.")
-        else:
-            raise
+    waiter = dynamodb_client.get_waiter('table_not_exists')
+    waiter.wait(TableName=table_name)
+    return "table_deleted"
 
 
 
 def load_dyanmo_db(table_name,value,primary_key, is_replace=False):
-    if is_replace:
+    if table_exists(table_name) is None:
+        print("Table not exists")
+        table_creation = create_table(table_name,primary_key)
+        print(table_creation)
+    elif table_exists(table_name) is not None & is_replace == True:
+        print("Table exists, deleting and recreating")
         delete_table(table_name)
-        create_table(table_name,primary_key)
-    else:
-        create_table_if_not_exists(table_name,primary_key)
+        print("Table deleted successfully")
+        print("Recreating table...")
+        table_creation = create_table(table_name,primary_key)
+        print(table_creation)
 
     table = dynamodb_resource.Table(table_name)
     table.put_item(Item=value)
-
 
 
 
