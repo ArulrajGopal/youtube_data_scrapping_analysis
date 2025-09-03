@@ -68,20 +68,13 @@ def delete_table(table_name):
 
     waiter = dynamodb_client.get_waiter('table_not_exists')
     waiter.wait(TableName=table_name)
-    return "table_deleted"
+    print(f"Table '{table_name}' deleted.")
 
 
 
-def load_dyanmo_db(table_name,value,primary_key, is_replace=False):
+def load_dyanmo_db(table_name,value,primary_key):
     if table_exists(table_name) is None:
         print("Table not exists")
-        table_creation = create_table(table_name,primary_key)
-        print(table_creation)
-    elif table_exists(table_name) is not None & is_replace == True:
-        print("Table exists, deleting and recreating")
-        delete_table(table_name)
-        print("Table deleted successfully")
-        print("Recreating table...")
         table_creation = create_table(table_name,primary_key)
         print(table_creation)
 
