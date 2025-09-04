@@ -25,6 +25,7 @@ def get_popular_comments(video_id_list):
     except HttpError as e:
         print(f"Failed to fetch comments for video ID {video_id}: {e}")
 
+
   return all_popular_comments
 
 df = read_from_sql("video_header_stage")
@@ -34,8 +35,11 @@ video_id_list = df['video_id'].tolist()
 popular_comments_lst = get_popular_comments(video_id_list)
 print("popular comments extracted successfully!")
 
-
+total_comments = len(popular_comments_lst)
+progress = 0
 for response in popular_comments_lst:
+    progress += 1
+    print(f"Progress: {progress}/{total_comments} comments details data loaded into dynamodb successfully!.")
     load_dyanmo_db("comment_details_raw",response,"comment_id")
 print("comment details loaded into dynamoDB successfully!")
 
