@@ -38,8 +38,6 @@ def get_video_header(playlist_id):
 def get_video_header_raw(channel_playlist_list):
     current_date = int(datetime.now().strftime("%Y%m%d%H"))
     video_response_list = []
-    total_playlists = len(channel_playlist_list)
-    progress = 0
     for playlst in channel_playlist_list:
         video_response_lst = get_video_header(playlst)
 
@@ -51,8 +49,6 @@ def get_video_header_raw(channel_playlist_list):
                 temp_dic["load_dt"] = current_date
                 temp_dic["updated_time"] = str(datetime.now())
                 video_response_list.append(temp_dic)
-        progress += 1
-        print(f"Progress: {progress}/{total_playlists} playlists processed.")
     return video_response_list
 
 

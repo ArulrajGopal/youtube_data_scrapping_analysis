@@ -27,9 +27,11 @@ video_id_list = df['video_id'].tolist()
 video_details_lst = extract_video_details(video_id_list)
 print("video details extracted successfully!")
 
-
+total_videos = len(video_id_list)
+progress = 0
 for response in video_details_lst:
+    progress += 1
+    print(f"Progress: {progress}/{total_videos} videos details data loaded into dynamodb successfully!.")
     load_dyanmo_db("video_details_raw",response,"video_id")
 print("video details loaded into dynamoDB successfully!")
-
 
