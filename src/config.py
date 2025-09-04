@@ -3,11 +3,16 @@ import boto3
 from googleapiclient.discovery import build
 from config import *
 
+# environment variables
 youtube_api_key = os.environ.get("youtube_api_key")
-youtube =  build("youtube","v3",developerKey=youtube_api_key)
-
 aws_access_key_id=os.environ.get("aws_access_key_id")
 aws_secret_access_key= os.environ.get("aws_secret_access_key")
+postgress_user = os.environ.get("postgress_user")
+postgres_password = os.environ.get("postgres_password")
+
+
+# configurations
+youtube =  build("youtube","v3",developerKey=youtube_api_key)
 
 dynamodb_resource = boto3.resource(
     'dynamodb',
@@ -22,10 +27,6 @@ dynamodb_client = boto3.client(
     aws_access_key_id=aws_access_key_id,
     aws_secret_access_key=aws_secret_access_key
 )
-
-postgress_user = os.environ.get("postgress_user")
-postgres_password = os.environ.get("postgres_password")
-
 
 # PostgreSQL connection details
 db_user = postgress_user
