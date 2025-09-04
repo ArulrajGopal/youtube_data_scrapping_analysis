@@ -33,4 +33,5 @@ for script in scripts:
         print(f"\n{script} completed successfully.")
     else:
         print(f"\n{script} failed with exit code {process.returncode}.")
+        sys.exit(process.returncode)
 
