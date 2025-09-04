@@ -7,8 +7,11 @@ from config import *
 youtube_api_key = os.environ.get("youtube_api_key")
 aws_access_key_id=os.environ.get("aws_access_key_id")
 aws_secret_access_key= os.environ.get("aws_secret_access_key")
-postgress_user = os.environ.get("postgress_user")
-postgres_password = os.environ.get("postgres_password")
+db_user = os.environ.get("postgress_user")
+db_password = os.environ.get("postgres_password")
+db_host =  os.environ.get("postgres_server")  
+db_port =  os.environ.get("postgres_port")
+db_name =  os.environ.get("database_name")
 
 
 # configurations
@@ -28,12 +31,6 @@ dynamodb_client = boto3.client(
     aws_secret_access_key=aws_secret_access_key
 )
 
-# PostgreSQL connection details
-db_user = postgress_user
-db_password = postgres_password
-db_host = 'localhost'       
-db_port = '5432'
-db_name = 'postgres'
 
 # In channel_id_config, the third element indicates whether to process the channel or not
 # True means process, False means skip
