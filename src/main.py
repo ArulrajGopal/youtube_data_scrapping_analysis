@@ -13,14 +13,24 @@ scripts = [
     ]
 
 
-
 for script in scripts:
-    print(f'Running {script}...')
-    result = subprocess.run(['python', script], capture_output=True, text=True)
-    print(f'--- Output of {script} ---')
-    print(result.stdout)
-    if result.stderr:
-        print(f'--- Errors in {script} ---')
-        print(result.stderr)
+    print(f"\nRunning {script}...")
+    process = subprocess.Popen(
+        ['python', script],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1
+    )
 
+    # Print logs in real-time
+    for line in process.stdout:
+        print(line, end='')
+
+    process.wait()  # Wait for script to finish
+
+    if process.returncode == 0:
+        print(f"\n{script} completed successfully.")
+    else:
+        print(f"\n{script} failed with exit code {process.returncode}.")
 
