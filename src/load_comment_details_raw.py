@@ -10,7 +10,7 @@ def get_popular_comments(video_id_list):
 
   for video_id in video_id_list:
     try:
-      request = youtube.commentThreads().list(part="snippet", maxResults=100,order="relevance",videoId=video_id)
+      request = youtube.commentThreads().list(part="snippet", maxResults=number_of_comments_to_fetch,order="relevance",videoId=video_id)
       response = request.execute()
 
       comments_list = response["items"]

@@ -16,6 +16,7 @@ db_name =  os.environ.get("database_name")
 
 # configurations
 youtube =  build("youtube","v3",developerKey=youtube_api_key)
+number_of_comments_to_fetch = 20
 
 dynamodb_resource = boto3.resource(
     'dynamodb',
