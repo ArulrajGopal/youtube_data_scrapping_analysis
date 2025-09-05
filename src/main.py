@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 scripts = [
     'src/cleanup.py',
