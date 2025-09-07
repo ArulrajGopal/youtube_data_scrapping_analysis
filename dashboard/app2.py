@@ -38,6 +38,11 @@ def get_data():
             return pd.DataFrame()
     return pd.DataFrame()
 
+
+st.logo(image="images/kaniniwitharul.png", 
+        icon_image="images/icon.png")
+
+
 # Display data in Streamlit
 if st.button("Load Data"):
     df = get_data()
