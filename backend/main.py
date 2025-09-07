@@ -2,15 +2,15 @@ import subprocess
 import sys
 
 scripts = [
-    'src/cleanup.py',
-    'src/load_channel_details_raw.py',
-    'src/load_channel_details_stage.py',
-    'src/load_video_header_raw.py',
-    'src/load_video_header_stage.py',
-    'src/load_video_details_raw.py',
-    'src/load_video_details_stage.py',
-    'src/load_comment_details_raw.py',
-    'src/load_comment_details_stage.py'
+    'backend/cleanup.py',
+    'backend/load_channel_details_raw.py',
+    'backend/load_channel_details_stage.py',
+    'backend/load_video_header_raw.py',
+    'backend/load_video_header_stage.py',
+    'backend/load_video_details_raw.py',
+    'backend/load_video_details_stage.py',
+    'backend/load_comment_details_raw.py',
+    'backend/load_comment_details_stage.py'
     ]
 
 
