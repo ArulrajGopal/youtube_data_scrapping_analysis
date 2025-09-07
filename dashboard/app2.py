@@ -14,6 +14,8 @@ database = "postgres"       # your database name
 user = "postgres"          # your username
 password = "Arulraj_1234" # your password
 
+st.set_page_config(page_title="YouTube Channel Dashboard", layout="wide")
+
 # Create database connection
 def get_connection():
     try:
