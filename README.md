@@ -45,7 +45,7 @@ Finally, the youtube dashboard is ready at the website!!!
 
 
 ## Workflow
-<img width="377" height="227" alt="image" src="https://github.com/user-attachments/assets/4d0660af-4d4d-40f3-8604-261b49cbfe53" />
+<img width="500" height="350" alt="image" src="https://github.com/user-attachments/assets/4d0660af-4d4d-40f3-8604-261b49cbfe53" />
 
 
 
