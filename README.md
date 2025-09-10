@@ -41,10 +41,12 @@ google developer console --> create new project --> Enable "youtube data API 3" 
 
 6. Run main.py
 
-
-
-
 Finally, the youtube dashboard is ready at the website!!!
+
+
+## Workflow
+<img width="377" height="227" alt="image" src="https://github.com/user-attachments/assets/4d0660af-4d4d-40f3-8604-261b49cbfe53" />
+
 
 
 
